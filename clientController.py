@@ -2,6 +2,11 @@ import os, sys
 import threading
 from threading import Thread
 import time
+import client1
+import client2
+import client3
+import client4
+import client5
 
 class Example():
     def __init__(self):
@@ -14,8 +19,8 @@ class Example():
             threading.Thread(target = function_b, args = (self,)).start()
 
         def function_a(self):
-            for i in range(10):
-                print (1)
+
+
                 time.sleep(0.01) # Add some delay here
 
         def function_b(self):
