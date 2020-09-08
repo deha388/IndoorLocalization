@@ -228,35 +228,36 @@ def on_disconnect(client, userdata, rc):  # called when the client disconnects f
         print("Unexpected Disconnection")
 
 
-subtop = "+/+/TA0000245/#"
-pubtop = "BTtakip/Pavofwu/TA0000245/cmd"
+subtop = "+/+/TA0000321/#"
+pubtop = "BTtakip/Pavofwu/TA0000321/cmd"
 
 broker_address = "localhost"
 port = 1883
 
-client = mqtt.Client()
-client.on_subscribe = on_subscribe
-client.on_unsubscribe = on_unsubscirbe
-client.on_connect = on_connect
-client.on_message = on_message
-client.connect(broker_address, port)
-time.sleep(1)
+def runClient3():
+    client = mqtt.Client()
+    client.on_subscribe = on_subscribe
+    client.on_unsubscribe = on_unsubscirbe
+    client.on_connect = on_connect
+    client.on_message = on_message
+    client.connect(broker_address, port)
+    time.sleep(1)
 
-FLAG = True
-chat = None
+    FLAG = True
+    chat = None
 
-client.subscribe(subtop)
-client.loop_start()
+    client.subscribe(subtop)
+    client.loop_start()
 
-time.sleep(120)
+    time.sleep(120)
 
-client.disconnect()
-client.loop_stop()
+    client.disconnect()
+    client.loop_stop()
 
-for i in range(len(HashTable1)):
+    for i in range(len(HashTable1)):
 
-    for j in HashTable1[i]:
-        keyMapDict[i]=HashTable1[i][-1]
+        for j in HashTable1[i]:
+            keyMapDict[i] = HashTable1[i][-1]
 
-# display_hash(HashTable1)
-print(keyMapDict)
+    # display_hash(HashTable1)
+    print(keyMapDict)

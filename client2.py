@@ -250,7 +250,7 @@ def runClient2():
     client.subscribe(subtop)
     client.loop_start()
 
-    time.sleep(10)
+    time.sleep(120)
 
     # st = os.stat("value.txt")
     # while True:

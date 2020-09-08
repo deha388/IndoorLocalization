@@ -241,7 +241,7 @@ def runClient1():
     client.loop_start()
 
 
-    time.sleep(10)
+    time.sleep(120)
 
     # while True:
     #     if  st.st_size == 10000000:
@@ -257,6 +257,6 @@ def runClient1():
 
     # display_hash(HashTable1)
     print("Client1++")
-    print("\033[1;34;40m Bright Blue \n")
+
     print(keyMapDict)
 
