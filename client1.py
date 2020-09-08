@@ -23,10 +23,8 @@ def closest_value(value, iterable):
 
     return keyValue
 
-
 def closest(lst, K):
     return lst[min(range(len(lst)), key=lambda i: abs(lst[i] - K))]
-
 
 # Function to display hashtable
 def display_hash(hashTable):
@@ -49,7 +47,6 @@ def display_hash(hashTable):
 # key for every value.
 def Hashing(keyvalue):
     return keyvalue % len(HashTable)
-
 
 # Insert Function to add
 # values to the hash table
@@ -122,13 +119,10 @@ def findKey(hashTable):
 
 ##########Defining all call back functions###################
 
-
 def on_connect(client, userdata, flags, rc):  # called when the broker responds to our connection request
     print("Connected Client1 - rc:", rc)
 
-
-def on_message(client, userdata,
-               message):  # Called when a message has been received on a topic that the client has subscirbed to.
+def on_message(client, userdata,message):  # Called when a message has been received on a topic that the client has subscirbed to.
 
     if str(message.topic) != pubtop:
 
@@ -234,29 +228,35 @@ pubtop = "BTtakip/Pavofwu/TA0000245/cmd"
 broker_address = "localhost"
 port = 1883
 
-client = mqtt.Client()
-client.on_subscribe = on_subscribe
-client.on_unsubscribe = on_unsubscirbe
-client.on_connect = on_connect
-client.on_message = on_message
-client.connect(broker_address, port)
-time.sleep(1)
+def runClient1():
+    client = mqtt.Client()
+    client.on_subscribe = on_subscribe
+    client.on_unsubscribe = on_unsubscirbe
+    client.on_connect = on_connect
+    client.on_message = on_message
+    client.connect(broker_address, port)
+    time.sleep(1)
 
-FLAG = True
-chat = None
+    client.subscribe(subtop)
+    client.loop_start()
 
-client.subscribe(subtop)
-client.loop_start()
 
-time.sleep(120)
+    time.sleep(10)
 
-client.disconnect()
-client.loop_stop()
+    # while True:
+    #     if  st.st_size == 10000000:
+    #         break
 
-for i in range(len(HashTable1)):
+    client.disconnect()
+    client.loop_stop()
 
-    for j in HashTable1[i]:
-        keyMapDict[i]=HashTable1[i][-1]
+    for i in range(len(HashTable1)):
 
-# display_hash(HashTable1)
-print(keyMapDict)
+        for j in HashTable1[i]:
+            keyMapDict[i] = HashTable1[i][-1]
+
+    # display_hash(HashTable1)
+    print("Client1++")
+    print("\033[1;34;40m Bright Blue \n")
+    print(keyMapDict)
+

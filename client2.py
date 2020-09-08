@@ -1,11 +1,14 @@
 import paho.mqtt.client as mqtt
 import time
+import os
+
+import self as self
 
 global list
 HashTable = [[] for _ in range(4000)]
 HashTable1 = [[] for _ in range(4000)]
 global keyMapDict
-keyMapDict={}
+keyMapDict = {}
 
 def closest_value(value, iterable):
     storage = []
@@ -23,10 +26,8 @@ def closest_value(value, iterable):
 
     return keyValue
 
-
 def closest(lst, K):
     return lst[min(range(len(lst)), key=lambda i: abs(lst[i] - K))]
-
 
 # Function to display hashtable
 def display_hash(hashTable):
@@ -70,17 +71,17 @@ def findKey(hashTable):
             # print("-->", end=" ")
             # print(j, end=" ")
 
-            #find to avarege number for the middle point of list
+            # find to avarege number for the middle point of list
 
             # print(avarageValue)
 
-            #closest number function
+            # closest number function
 
             k = closest(hashTable[i], avarageValue)
-            #taking index to closest number is helping us the keyValue so keyValue==(i+(i+1)+(i+2)+(i-1)+(i-2))==RSSI
+            # taking index to closest number is helping us the keyValue so keyValue==(i+(i+1)+(i+2)+(i-1)+(i-2))==RSSI
             index = hashTable[i].index(k)
 
-            #flowing value need to sort for the real RSSI
+            # flowing value need to sort for the real RSSI
             hashTable[i].sort()
 
             try:
@@ -88,7 +89,8 @@ def findKey(hashTable):
                     keyValue = avarageValue
                 else:
 
-                    if hashTable[i][index] == hashTable[i][index + 1] == hashTable[i][index + 2] == hashTable[i][index + 3] == hashTable[i][index + 4]:
+                    if hashTable[i][index] == hashTable[i][index + 1] == hashTable[i][index + 2] == hashTable[i][
+                        index + 3] == hashTable[i][index + 4]:
 
                         keyValue = hashTable[i][index]
 
@@ -113,22 +115,21 @@ def findKey(hashTable):
             except IndexError:
                 keyValue = avarageValue
 
-
             # print(keyValue)
 
-            insert(HashTable1,i,keyValue)
+            insert(HashTable1, i, keyValue)
 
     # print()
+
 
 ##########Defining all call back functions###################
 
 
 def on_connect(client, userdata, flags, rc):  # called when the broker responds to our connection request
-    print("Connected Client1 - rc:", rc)
+    print("Connected Client2 - rc:", rc)
 
 
-def on_message(client, userdata,
-               message):  # Called when a message has been received on a topic that the client has subscirbed to.
+def on_message(client, userdata,message):  # Called when a message has been received on a topic that the client has subscirbed to.
 
     if str(message.topic) != pubtop:
 
@@ -202,7 +203,9 @@ def on_message(client, userdata,
                 insert(HashTable, arrs[i][0], arrs[i][1])
                 # print(arrs[i])
             print(arrs)
+
             findKey(HashTable)
+
 
             # List=["asd","asd","asd"]
             # with open("value.txt", 'a') as output:
@@ -228,35 +231,44 @@ def on_disconnect(client, userdata, rc):  # called when the client disconnects f
         print("Unexpected Disconnection")
 
 
-subtop = "+/+/TA0000245/#"
-pubtop = "BTtakip/Pavofwu/TA0000245/cmd"
+subtop = "+/+/TA0000262/#"
+pubtop = "BTtakip/Pavofwu/TA0000262/cmd"
 
 broker_address = "localhost"
 port = 1883
 
-client = mqtt.Client()
-client.on_subscribe = on_subscribe
-client.on_unsubscribe = on_unsubscirbe
-client.on_connect = on_connect
-client.on_message = on_message
-client.connect(broker_address, port)
-time.sleep(1)
 
-FLAG = True
-chat = None
+def runClient2():
+    client = mqtt.Client()
+    client.on_subscribe = on_subscribe
+    client.on_unsubscribe = on_unsubscirbe
+    client.on_connect = on_connect
+    client.on_message = on_message
+    client.connect(broker_address, port)
+    time.sleep(1)
 
-client.subscribe(subtop)
-client.loop_start()
+    client.subscribe(subtop)
+    client.loop_start()
 
-time.sleep(120)
+    time.sleep(10)
 
-client.disconnect()
-client.loop_stop()
+    # st = os.stat("value.txt")
+    # while True:
+    #     if st.st_size == 10000000:
+    #         break
 
-for i in range(len(HashTable1)):
+    client.disconnect()
+    client.loop_stop()
 
-    for j in HashTable1[i]:
-        keyMapDict[i]=HashTable1[i][-1]
 
-# display_hash(HashTable1)
-print(keyMapDict)
+    for i in range(len(HashTable1)):
+
+        for j in HashTable1[i]:
+            keyMapDict[i] = HashTable1[i][-1]
+
+    # display_hash(HashTable1)
+    print("Client2++")
+    print("\033[1;33;40m Yellow \n")
+    print(keyMapDict)
+
+
