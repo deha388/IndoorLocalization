@@ -30,7 +30,7 @@ def print_hi(name):
 if __name__ == '__main__':
 
     clientController.method_1()
-    time.sleep(140)
+    time.sleep(130)
 
     for key in client1.keyMapDict:
         if key in client2.keyMapDict and key in client3.keyMapDict and key in client4.keyMapDict and key in client5.keyMapDict:
