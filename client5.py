@@ -126,7 +126,6 @@ def findKey(hashTable):
 def on_connect(client, userdata, flags, rc):  # called when the broker responds to our connection request
     print("Connected Client1 - rc:", rc)
 
-
 def on_message(client, userdata,
                message):  # Called when a message has been received on a topic that the client has subscirbed to.
 
